@@ -13,18 +13,13 @@ function ListaTarefas() {
   useEffect(() => {
     const buscarTarefas = async () => {
       try {
-        // 1. Tenta puxar as tarefas salvas na memória do navegador primeiro
         const tarefasSalvas = localStorage.getItem('minhas_tarefas');
-        
         if (tarefasSalvas) {
-          // Se achou, usa elas!
           setTarefas(JSON.parse(tarefasSalvas));
         } else {
-          // Se não achou (primeira vez), puxa do arquivo JSON
           const resposta = await fetch('/tarefas.json');
           const dados = await resposta.json();
           setTarefas(dados);
-          // E já salva na memória para a próxima vez
           localStorage.setItem('minhas_tarefas', JSON.stringify(dados));
         }
       } catch (erro) {
@@ -50,17 +45,24 @@ function ListaTarefas() {
       dataCriacao: new Date().toISOString()
     };
 
-    // 2. Atualiza a lista com a nova tarefa
     const listaAtualizada = [...tarefas, novaTarefa];
     setTarefas(listaAtualizada);
-    
-    // 3. Salva a lista atualizada na memória do navegador!
     localStorage.setItem('minhas_tarefas', JSON.stringify(listaAtualizada));
 
     setNovoTitulo('');
     setNovaDescricao('');
     setNovaPrioridade('baixa');
     setNovoStatus('pendente');
+  };
+
+  // Função nova para apagar a tarefa
+  const deletarTarefa = (id) => {
+    const confirmar = window.confirm("Tem certeza que deseja apagar esta tarefa?");
+    if (confirmar) {
+      const listaAtualizada = tarefas.filter((tarefa) => tarefa.id !== id);
+      setTarefas(listaAtualizada);
+      localStorage.setItem('minhas_tarefas', JSON.stringify(listaAtualizada));
+    }
   };
 
   const tarefasFiltradas = tarefas.filter((tarefa) => {
@@ -110,11 +112,19 @@ function ListaTarefas() {
             <li key={tarefa.id} className="card-tarefa">
               <h3>{tarefa.titulo}</h3>
               <p>{tarefa.descricao}</p>
-              <p><strong>Prioridade:</strong> {tarefa.prioridade} | <strong>Status:</strong> {tarefa.status}</p>
+              <p><strong>Prioridade:</strong> <span style={{ textTransform: 'capitalize' }}>{tarefa.prioridade}</span> | <strong>Status:</strong> <span style={{ textTransform: 'capitalize' }}>{tarefa.status}</span></p>
               
-              <Link to={`/tarefas/${tarefa.id}`} className="btn-detalhes">
-                Ver Detalhes
-              </Link>
+              <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
+                <Link to={`/tarefas/${tarefa.id}`} className="btn-detalhes">
+                  Ver Detalhes
+                </Link>
+                <button 
+                  onClick={() => deletarTarefa(tarefa.id)}
+                  style={{ background: '#dc3545', color: 'white', border: 'none', padding: '8px 15px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+                >
+                  Apagar
+                </button>
+              </div>
             </li>
           ))}
         </ul>
