@@ -1,0 +1,133 @@
+/* Variáveis de cores para manter o padrão visual */
+:root {
+  --bg-color: #f4f7f6;
+  --text-main: #333;
+  --primary: #007bff;
+  --primary-hover: #0056b3;
+  --success: #28a745;
+  --success-hover: #218838;
+  --card-bg: #ffffff;
+  --border: #e0e0e0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  margin: 0;
+  padding: 0;
+}
+
+/* Container centralizado */
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.titulo-principal {
+  text-align: center;
+  color: var(--text-main);
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+}
+
+/* Estilos do Formulário */
+.form-tarefa {
+  background: var(--card-bg);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-tarefa input, .form-tarefa select {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-tarefa input:focus, .form-tarefa select:focus {
+  border-color: var(--primary);
+}
+
+.btn-adicionar {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background 0.3s, transform 0.1s;
+}
+
+.btn-adicionar:hover { background: var(--primary-hover); }
+.btn-adicionar:active { transform: scale(0.98); }
+
+/* Estilos dos Filtros */
+.filtros {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+  justify-content: center;
+}
+
+.btn-filtro {
+  padding: 10px 20px;
+  border: 2px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-filtro:hover { background: rgba(0, 123, 255, 0.1); }
+.btn-filtro.ativo { background: var(--primary); color: white; }
+
+/* Estilos da Lista e Cards */
+.lista-tarefas {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 15px;
+}
+
+.card-tarefa {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 6px solid var(--primary);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card-tarefa:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+}
+
+.card-tarefa h3 { margin: 0 0 10px 0; font-size: 1.3rem; }
+.card-tarefa p { margin: 5px 0; color: #555; }
+
+.btn-detalhes {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 18px;
+  background: var(--success);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn-detalhes:hover { background: var(--success-hover); }

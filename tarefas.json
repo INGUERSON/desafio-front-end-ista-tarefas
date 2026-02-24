@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "titulo": "Estudar React Router",
+    "descricao": "Revisar a documentação do react-router-dom para implementar rotas com parâmetros dinâmicos.",
+    "prioridade": "alta",
+    "status": "pendente",
+    "dataCriacao": "2026-02-20T10:00:00Z"
+  },
+  {
+    "id": 2,
+    "titulo": "Criar layout base",
+    "descricao": "Desenvolver a estrutura inicial do projeto separando as pastas em components/, pages/ e data/.",
+    "prioridade": "média",
+    "status": "concluída",
+    "dataCriacao": "2026-02-21T14:30:00Z"
+  },
+  {
+    "id": 3,
+    "titulo": "Configurar fetch API",
+    "descricao": "Implementar o hook useEffect para carregar o arquivo tarefas.json simulando uma chamada de API.",
+    "prioridade": "alta",
+    "status": "pendente",
+    "dataCriacao": "2026-02-22T09:15:00Z"
+  },
+  {
+    "id": 4,
+    "titulo": "Ajustar CSS e Responsividade",
+    "descricao": "Melhorar a interface da lista de tarefas para funcionar bem em telas menores.",
+    "prioridade": "baixa",
+    "status": "pendente",
+    "dataCriacao": "2026-02-23T08:00:00Z"
+  }
+]
