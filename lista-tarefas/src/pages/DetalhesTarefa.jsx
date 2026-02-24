@@ -8,9 +8,19 @@ function DetalhesTarefa() {
   useEffect(() => {
     const buscarDetalhes = async () => {
       try {
-        const resposta = await fetch('/tarefas.json');
-        const dados = await resposta.json();
+        let dados = [];
+        // 1. Puxa a lista atualizada da memória do navegador (onde estão as tarefas novas)
+        const tarefasSalvas = localStorage.getItem('minhas_tarefas');
         
+        if (tarefasSalvas) {
+          dados = JSON.parse(tarefasSalvas);
+        } else {
+          // Se não tiver na memória, puxa do arquivo JSON original
+          const resposta = await fetch('/tarefas.json');
+          dados = await resposta.json();
+        }
+        
+        // 2. Procura a tarefa específica pelo ID
         const tarefaEncontrada = dados.find((t) => t.id === parseInt(id));
         setTarefa(tarefaEncontrada);
       } catch (erro) {
@@ -27,9 +37,7 @@ function DetalhesTarefa() {
     <div>
       <h2 className="titulo-principal">Detalhes da Tarefa</h2>
       
-      {/* Reutilizamos a classe card-tarefa do nosso App.css */}
       <div className="card-tarefa" style={{ marginTop: '20px', padding: '30px' }}>
-        
         <h3 style={{ fontSize: '1.8rem', color: 'var(--primary)', marginBottom: '15px' }}>
           {tarefa.titulo}
         </h3>
@@ -38,7 +46,6 @@ function DetalhesTarefa() {
           <strong>Descrição:</strong> {tarefa.descricao}
         </p>
         
-        {/* Bloco de informações secundárias com um fundo leve */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', padding: '15px', backgroundColor: '#f8f9fa', borderRadius: '8px', border: '1px solid var(--border)' }}>
             <p style={{ margin: 0 }}><strong>Prioridade:</strong> <span style={{ textTransform: 'capitalize' }}>{tarefa.prioridade}</span></p>
             <p style={{ margin: 0 }}><strong>Status:</strong> <span style={{ textTransform: 'capitalize' }}>{tarefa.status}</span></p>
@@ -46,7 +53,6 @@ function DetalhesTarefa() {
         </div>
       </div>
       
-      {/* Botão de voltar estilizado */}
       <div style={{ textAlign: 'center', marginTop: '30px' }}>
           <Link to="/" className="btn-filtro" style={{ textDecoration: 'none', display: 'inline-block' }}>
             ⬅ Voltar para a Lista
