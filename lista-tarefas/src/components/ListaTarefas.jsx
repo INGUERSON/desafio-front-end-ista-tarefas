@@ -13,9 +13,20 @@ function ListaTarefas() {
   useEffect(() => {
     const buscarTarefas = async () => {
       try {
-        const resposta = await fetch('/tarefas.json');
-        const dados = await resposta.json();
-        setTarefas(dados);
+        // 1. Tenta puxar as tarefas salvas na memória do navegador primeiro
+        const tarefasSalvas = localStorage.getItem('minhas_tarefas');
+        
+        if (tarefasSalvas) {
+          // Se achou, usa elas!
+          setTarefas(JSON.parse(tarefasSalvas));
+        } else {
+          // Se não achou (primeira vez), puxa do arquivo JSON
+          const resposta = await fetch('/tarefas.json');
+          const dados = await resposta.json();
+          setTarefas(dados);
+          // E já salva na memória para a próxima vez
+          localStorage.setItem('minhas_tarefas', JSON.stringify(dados));
+        }
       } catch (erro) {
         console.error("Erro ao carregar:", erro);
       }
@@ -39,7 +50,13 @@ function ListaTarefas() {
       dataCriacao: new Date().toISOString()
     };
 
-    setTarefas([...tarefas, novaTarefa]);
+    // 2. Atualiza a lista com a nova tarefa
+    const listaAtualizada = [...tarefas, novaTarefa];
+    setTarefas(listaAtualizada);
+    
+    // 3. Salva a lista atualizada na memória do navegador!
+    localStorage.setItem('minhas_tarefas', JSON.stringify(listaAtualizada));
+
     setNovoTitulo('');
     setNovaDescricao('');
     setNovaPrioridade('baixa');
